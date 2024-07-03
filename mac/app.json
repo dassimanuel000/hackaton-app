@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "mac",
+    "slug": "mac",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NFCReaderUsageDescription": "This app uses NFC to scan NFC tags."
+      },
+      "bundleIdentifier": "com.manueldassi.mac"
+    },
+    "android": {
+      "package": "com.manueldassi.mac",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "VIBRATE",
+        "INTERNET",
+        "NFC"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

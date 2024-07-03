@@ -1,0 +1,12 @@
+fastapi
+pydantic
+requests
+uvicorn
+pandas
+asyncio
+courlan
+htmldate
+justext
+lxml==5.1.0
+beautifulsoup4
+psycopg2-binary
