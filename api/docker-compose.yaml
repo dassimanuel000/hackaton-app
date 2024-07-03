@@ -5,10 +5,6 @@ networks:
 services:
 ### ZMOOZY ###
   instagram_platform:
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://localhost:3100/loki/api/v1/push"
     image: c5hpiv70.c1.bhs5.container-registry.ovh.net/zmoozy/instagram_platform:1.0.1
     restart: always
     environment:
