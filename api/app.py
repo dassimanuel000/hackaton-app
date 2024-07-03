@@ -8,16 +8,54 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from typing import List
 import uvicorn
 from constants import  PORT_USE
-from database.apiUser import SimpleInfo, User
+from database.apiUser import SimpleInfo, Token, User
+import time
+import threading
 
-
-from function import authentifaction, get_db_connection
+from function import authentifaction, create_job, get_db_connection, verify
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
 
-# Allow CORS
+
+
+
+def check_txt_file_exists(file_path):
+    return os.path.isfile(file_path) and file_path.endswith('.txt')
+
+def periodic_check():
+    while True:
+        file_path = 'example.txt'
+        if check_txt_file_exists(file_path):
+            print(f"The file {file_path} exists.")
+        else:
+            print(f"The file {file_path} does not exist.")
+        time.sleep(90)
+
+# Function to start the periodic check in a separate thread
+def start_periodic_check():
+    thread = threading.Thread(target=periodic_check, daemon=True)
+    thread.start()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -36,9 +74,9 @@ async def read_home():
 @app.post("/login/")
 async def login(info: SimpleInfo):
     
-    permalink = info.permalink
-    access_token = "your_access_token_here"
-    media_id_info = authentifaction(permalink, access_token)
+    user_name = info.user_name
+    access_token = info.token
+    media_id_info = authentifaction(user_name, access_token)
 
     if media_id_info:
         print(f"Media ID: {media_id_info}")
@@ -46,6 +84,32 @@ async def login(info: SimpleInfo):
     else:
         print("Failed to retrieve media ID.")
         raise HTTPException(status_code=400, detail="Failed download ")
+    
+@app.post("/initiate-auth/")
+async def token_i(info: Token):
+    
+    email = info.email
+    date = time.time()
+    date =int(date * 1000)
+    create_job(date, email)
+    for _ in range(6):
+        print("Running task at:", time.strftime('%Y-%m-%d %H:%M:%S'))
+        time.sleep(10)
+        
+        file_path = 'job.txt'
+        if check_txt_file_exists(file_path):
+            print(f"The file {file_path} exists.")
+        else:
+            return {"status": "ok"}
+    
+    return {"message": "Completed the loop without finding the file."}
+
+
+@app.post("/card/")
+async def checker(info: Token):
+    token = info.email
+    media_id_info = verify(token)
+    return media_id_info
 
 
 # CRUD Routes for Users
@@ -77,6 +141,7 @@ async def read_users():
     cur.close()
     conn.close()
     return users
+
 
 @app.get("/users/{user_id}", response_model=User)
 async def read_user(user_id: int):
@@ -117,4 +182,5 @@ async def delete_user(user_id: int):
 
 
 if __name__ == "__main__":
+    start_periodic_check()
     uvicorn.run("app:app", port=PORT_USE, log_level="info")

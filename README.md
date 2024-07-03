@@ -67,7 +67,8 @@ Assurez-vous d'avoir les prérequis suivants installés :
 
    ```sh
    git clone https://github.com/dassimanuel000/hackaton-app.git
-   cd hackathon-nfc-auth
+   
+   cd hackaton-app
    ```
 
 2. **Configuration du api** :

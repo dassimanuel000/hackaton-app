@@ -25,7 +25,7 @@ const App = () => {
 
   const handleAddUser = async () => {
     try {
-      const response = await axios.post('http://localhost:3300/users', user);
+      const response = await axios.post('http://51.83.77.248:8090/users', user);
       Alert.alert('Response', response.data.message);
       setIsReadingUser(false);
     } catch (error) {
@@ -48,7 +48,9 @@ const App = () => {
         const ndefRecord = tag.ndefMessage[0];
         const decoded = Ndef.text.decodePayload(ndefRecord.payload);
         setNfcToken(decoded);
+        console.log(decoded);
         Alert.alert('NFC Token Read', decoded);
+        sendNfcToken()
       }
     } catch (ex) {
       console.warn(ex);
@@ -65,7 +67,7 @@ const App = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3300/login', { token: nfcToken });
+      const response = await axios.post('http://51.83.77.248:8090/card', { token: nfcToken });
       Alert.alert('Response', response.data.message);
     } catch (error) {
       console.error(error);
@@ -83,7 +85,7 @@ const App = () => {
       </View>
       {nfcToken && <Text style={styles.tokenText}>NFC Token: {nfcToken}</Text>}
       <View style={styles.buttonContainer}>
-        <Button title="Add User" onPress={() => setIsReadingUser(true)} />
+        <Button title="Add User here" onPress={() => setIsReadingUser(true)} />
       </View>
       <Modal
         transparent={true}

@@ -15,4 +15,7 @@ class User(BaseModel):
 # Models
 class SimpleInfo(BaseModel):
     user_name: str
-    permalink: Optional[str] = None
+    token: Optional[str] = None
+    
+class Token(BaseModel):
+    email: Optional[str] = None
