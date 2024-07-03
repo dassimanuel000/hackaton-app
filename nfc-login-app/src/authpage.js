@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 
+const API_URL = 'http://51.83.77.248:8090';
+
 Modal.setAppElement("#root");
 
 const AuthPage = () => {
@@ -15,7 +17,7 @@ const AuthPage = () => {
     setIsModalOpen(true);
     try {
         const response = await axios.post(
-          "http://127.0.0.1:8090/initiate-auth/",
+          "${API_URL}/initiate-auth/",
           { email }
         );
         if (response.status === 200) {
@@ -31,7 +33,7 @@ const AuthPage = () => {
   const startPolling = (sessionId) => {
     /*const interval = setInterval(async () => {
       const response = await axios.get(
-        `http://51.83.77.248:8090/auth-status/${sessionId}`
+        `${API_URL}/auth-status/${sessionId}`
       );
       setAuthStatus(response.data.status);
       if (response.data.status === "authenticated") {

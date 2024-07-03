@@ -61,13 +61,13 @@ const App = () => {
   };
 
   const sendNfcToken = async () => {
-    if (!nfcToken) {
+    if (nfcToken) {
       Alert.alert('Error', 'Please Put your card');
       return;
     }
-
+    console.log(nfcToken)
     try {
-      const response = await axios.post('http://51.83.77.248:8090/card', { token: nfcToken });
+      const response = await axios.post('http://51.83.77.248:8090/card', { email: nfcToken });
       Alert.alert('Response', response.data.message);
     } catch (error) {
       console.error(error);

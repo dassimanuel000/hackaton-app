@@ -63,11 +63,11 @@ def remove_file(file_path):
 def verify(token):
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM users WHERE token = %s', (token,))
+    cur.execute('SELECT * FROM users WHERE token LIKE %s', ('%' + token + '%',))
     row = cur.fetchone()
     if row is None:
         print('Token not found')
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Userss not found")
     if row:
         print(row)
         remove_file('job.txt')

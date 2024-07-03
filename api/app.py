@@ -108,6 +108,8 @@ async def token_i(info: Token):
 @app.post("/card/")
 async def checker(info: Token):
     token = info.email
+    print(token)
+    print('----------------------------')
     media_id_info = verify(token)
     return media_id_info
 
