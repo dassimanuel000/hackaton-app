@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, View, Button, Text, StyleSheet, Alert, ActivityIndicator, Modal, TextInput } from 'react-native';
 import NfcManager, { NfcTech, Ndef } from 'react-native-nfc-manager';
 import axios from 'axios';
-import { User } from '../database/User';
+import { User } from '../api/database/User';
 
 NfcManager.start();
 
@@ -49,7 +49,7 @@ const App = () => {
         const decoded = Ndef.text.decodePayload(ndefRecord.payload);
         setNfcToken(decoded);
         console.log(decoded);
-        Alert.alert('NFC Token Read', decoded);
+        //Alert.alert('NFC Token Read', decoded);
         sendNfcToken()
       }
     } catch (ex) {
