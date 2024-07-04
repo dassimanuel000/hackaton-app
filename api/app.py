@@ -70,6 +70,14 @@ app.add_middleware(
 async def read_home():
     return {"message": "Welcome to the Home Page"}
 
+@app.get("/create-job/")
+async def create_job_read_home():
+    email = 'info.email'
+    date = time.time()
+    date =int(date * 1000)
+    create_job(date, email)
+    return {"status": "ok"}
+
 # Post route to handle simple info
 @app.post("/login/")
 async def login(info: SimpleInfo):
@@ -88,10 +96,6 @@ async def login(info: SimpleInfo):
 @app.post("/initiate-auth/")
 async def token_i(info: Token):
     
-    email = info.email
-    date = time.time()
-    date =int(date * 1000)
-    create_job(date, email)
     for _ in range(6):
         print("Running task at:", time.strftime('%Y-%m-%d %H:%M:%S'))
         time.sleep(10)

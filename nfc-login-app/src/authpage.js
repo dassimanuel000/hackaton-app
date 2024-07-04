@@ -12,18 +12,17 @@ const AuthPage = () => {
   const [authStatus, setAuthStatus] = useState("pending");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen_, setIsModalOpen_] = useState(false);
-
   const initiateAuth = async () => {
     setIsModalOpen(true);
     try {
-        const response = await axios.post(
-          `${API_URL}/initiate-auth/`,
+        const response = await axios.get(
+          `${API_URL}/create-job/`,
           { email }
         );
         if (response.status === 200) {
             console.log('status 200')
           if (response.data.status === "ok") {
-            setIsModalOpen_(true);
+            console.log('job create')
           }else{
             setIsModalOpen(false);
           }
@@ -31,6 +30,25 @@ const AuthPage = () => {
     } catch (error) {
         console.error("Error initiating authentication:", error);
     }
+    setTimeout(async () => {
+      try {
+        const response = await axios.post(
+          `${API_URL}/initiate-auth/`,
+          { email }
+        );
+        if (response.status === 200) {
+          console.log('status 200');
+          if (response.data.status === "ok") {
+            setIsModalOpen_(true);
+          } else {
+            setIsModalOpen(false);
+          }
+        }
+      } catch (error) {
+        console.error("Error initiating authentication:", error);
+        setIsModalOpen(false); // Close the modal on error
+      }
+    }, 30000); // Wait 30 seconds before making the call
   };
 
   const startPolling = (sessionId) => {

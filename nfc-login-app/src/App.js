@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Login from './Login';
 import { getUsers, getUserById, updateUser } from './api';
 import AuthPage from './authpage';
+import './App.css';   
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -40,60 +41,45 @@ const App = () => {
             console.error(`Error updating user with ID ${userId}`, error);
         }
     };
-
-    return ( <
-        div > {!user ? ( <
-                Login onLoginSuccess = { handleLoginSuccess }
-                />
-            ) : ( <
-                div >
-                <
-                h2 > Welcome, { user.username } < /h2> <
-                button onClick = { fetchUsers } > Fetch Users < /button> <
-                ul > {
-                    users.map((user) => ( <
-                        li key = { user.id }
-                        onClick = {
-                            () => fetchUserById(user.id) } > { user.username } <
-                        /li>
-                    ))
-                } <
-                /ul> {
-                    selectedUser && ( <
-                        div >
-                        <
-                        h3 > User Details < /h3> <
-                        p > Username: { selectedUser.username } < /p> <
-                        p > Email: { selectedUser.email } < /p> { /* Add more user details as needed */ } <
-                        button onClick = {
-                            () => handleUpdateUser(selectedUser.id, selectedUser) } > Update User < /button> <
-                        /div>
-                    )
-                } <
-                /div>
-            )
-        } <
-        div >
-        <
-        AuthPage / >
-        <
-        button onClick = { fetchUsers } > Fetch Users < /button> {
-            users && ( <
-                p > running < /p>
-            )
-        } <
-        ul > {
-            users.map((user) => ( <
-                li key = { user.id }
-                onClick = {
-                    () => fetchUserById(user.id) } > { user.username } <
-                /li>
-            ))
-        } <
-        /ul> <
-        /div> <
-        /div>
+    return (
+      <div className="app-container">
+        {!user ? (
+          <Login onLoginSuccess={handleLoginSuccess} />
+        ) : (
+          <div className="user-dashboard">
+            <h2 className="welcome-message">Welcome, {user.username}</h2>
+            <button className="fetch-button" onClick={fetchUsers}>Fetch Users</button>
+            <ul className="user-list">
+              {users.map((user) => (
+                <li key={user.id} className="user-item" onClick={() => fetchUserById(user.id)}>
+                  {user.username}
+                </li>
+              ))}
+            </ul>
+            {selectedUser && (
+              <div className="user-details">
+                <h3>User Details</h3>
+                <p>Username: {selectedUser.username}</p>
+                <p>Email: {selectedUser.email}</p>
+                <button className="update-button" onClick={() => handleUpdateUser(selectedUser.id, selectedUser)}>Update User</button>
+              </div>
+            )}
+          </div>
+        )}
+        <div className="auth-page">
+          <AuthPage />
+          <button className="fetch-button" onClick={fetchUsers}>Fetch Users</button>
+          {users && <p className="status">Running</p>}
+          <ul className="user-list">
+            {users.map((user) => (
+              <li key={user.id} className="user-item" onClick={() => fetchUserById(user.id)}>
+                {user.username}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     );
-};
-
-export default App;
+  };
+  
+  export default App;

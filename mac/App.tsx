@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Button, Text, StyleSheet, Alert, ActivityIndicator, Modal, TextInput } from 'react-native';
+import { SafeAreaView, View, Button, Text, StyleSheet, Alert, ActivityIndicator, Modal, TextInput, Image } from 'react-native';
 import NfcManager, { NfcTech, Ndef } from 'react-native-nfc-manager';
 import axios from 'axios';
 import { User } from '../api/database/User';
@@ -74,6 +74,13 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Image
+        source={{ uri: 'https://i.ibb.co/pKmQ1Cp/image.png' }} 
+        style={styles.modalImage}
+      />
+      <View style={styles.header}>
+        <Text style={styles.headerText}>NFC Reader App</Text>
+      </View>
       <View style={styles.buttonContainer}>
         <Button title="Read NFC Card" onPress={readNfc} />
       </View>
@@ -93,10 +100,15 @@ const App = () => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <ActivityIndicator size="large" color="#0000ff" />
+            <Image
+              source={{ uri: 'https://i.ibb.co/pKmQ1Cp/image.png' }} 
+              style={styles.modalImage}
+            />
             <Text style={styles.modalText}>Please place your NFC card near the device...</Text>
           </View>
         </View>
       </Modal>
+
 
       <Modal
         transparent={true}
@@ -157,20 +169,31 @@ const App = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
+    padding: 20,
+    backgroundColor: '#f0f0f0',
+  },
+  header: {
+    marginBottom: 20,
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
   },
   buttonContainer: {
-    margin: 10,
+    marginVertical: 10,
+    width: '80%',
   },
   tokenText: {
     marginTop: 20,
-    fontSize: 16,
+    fontSize: 18,
+    color: '#007bff',
+    fontWeight: '600',
   },
   modalContainer: {
     flex: 1,
@@ -184,10 +207,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
   modalText: {
-    marginBottom: 10,
+    marginTop: 10,
     fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+  },
+  modalImage: {
+    width: 200,
+    height: 150,
+    marginBottom: 20,
   },
   input: {
     width: '100%',

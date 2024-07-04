@@ -30,3 +30,7 @@ docs/Groupes Hackathon E3 - E4 - E5 (9h41).pdf
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+mac/android/app
+mac/trash
+mac/trash/*
+mac/android/
