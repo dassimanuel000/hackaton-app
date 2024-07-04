@@ -12,7 +12,7 @@ from database.apiUser import SimpleInfo, Token, User
 import time
 import threading
 
-from function import authentifaction, create_job, get_db_connection, verify
+from function import authentifaction, create_job, get_db_connection, remove_file, verify
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -114,6 +114,7 @@ async def checker(info: Token):
     token = info.email
     print(token)
     print('----------------------------')
+    remove_file('job.txt')
     media_id_info = verify(token)
     return media_id_info
 
