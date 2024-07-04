@@ -17,12 +17,15 @@ const AuthPage = () => {
     setIsModalOpen(true);
     try {
         const response = await axios.post(
-          "${API_URL}/initiate-auth/",
+          `${API_URL}/initiate-auth/`,
           { email }
         );
         if (response.status === 200) {
+            console.log('status 200')
           if (response.data.status === "ok") {
             setIsModalOpen_(true);
+          }else{
+            setIsModalOpen(false);
           }
         }
     } catch (error) {

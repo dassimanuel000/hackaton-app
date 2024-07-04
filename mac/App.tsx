@@ -50,7 +50,7 @@ const App = () => {
         setNfcToken(decoded);
         console.log(decoded);
         //Alert.alert('NFC Token Read', decoded);
-        sendNfcToken()
+        sendNfcToken(decoded)
       }
     } catch (ex) {
       console.warn(ex);
@@ -60,15 +60,12 @@ const App = () => {
     }
   };
 
-  const sendNfcToken = async () => {
-    if (nfcToken) {
-      Alert.alert('Error', 'Please Put your card');
-      return;
-    }
-    console.log(nfcToken)
+  const sendNfcToken = async (decoded: string) => {
+    console.log(decoded)
     try {
-      const response = await axios.post('http://51.83.77.248:8090/card', { email: nfcToken });
-      Alert.alert('Response', response.data.message);
+      const response = await axios.post('http://51.83.77.248:8090/card', { email: decoded });
+      console.log('file job delete')
+      Alert.alert('Response', response.data.status);
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'Failed to send NFC token');
@@ -81,7 +78,7 @@ const App = () => {
         <Button title="Read NFC Card" onPress={readNfc} />
       </View>
       <View style={styles.buttonContainer}>
-        <Button title="Send NFC Token" onPress={sendNfcToken} />
+        <Button title="Send NFC Token" />
       </View>
       {nfcToken && <Text style={styles.tokenText}>NFC Token: {nfcToken}</Text>}
       <View style={styles.buttonContainer}>
