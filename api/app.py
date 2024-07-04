@@ -98,7 +98,7 @@ async def token_i(info: Token):
     
     for _ in range(6):
         print("Running task at:", time.strftime('%Y-%m-%d %H:%M:%S'))
-        time.sleep(10)
+        time.sleep(1)
         
         file_path = 'job.txt'
         if check_txt_file_exists(file_path):
